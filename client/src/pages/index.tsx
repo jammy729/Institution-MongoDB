@@ -5,7 +5,6 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-
 import { Link } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -37,6 +36,17 @@ interface Institution {
 const Home: React.FC = () => {
   const [institutionList, setInstitutionList] = useState<Institution[]>([]);
 
+  let API_ENDPOINT: string;
+  const isProduction = false;
+  console.log(`Production mode: ${isProduction}`);
+
+  // eslint-disable-next-line prefer-const
+  API_ENDPOINT = isProduction
+    ? "http://localhost:9001"
+    : "https://institution-api.jamesyoo.dev";
+
+  console.log(`API ENDPOINT: ${API_ENDPOINT}`);
+
   //   PAGINATION
   const [page, setPage] = useState<number>(1);
 
@@ -51,7 +61,7 @@ const Home: React.FC = () => {
     console.log(countryValue);
     axios
       .get(
-        `http://localhost:9001/institution/read?page=${page}?countryName=${countryValue}`
+        `${API_ENDPOINT}/institution/read?page=${page}?countryName=${countryValue}`
       )
       .then((response) => {
         console.log(response.data);
@@ -60,7 +70,7 @@ const Home: React.FC = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [page, countryValue]);
+  }, [page, countryValue, API_ENDPOINT]);
 
   const institutionLink = (id: string) => {
     console.log(`Link ${id}`);
