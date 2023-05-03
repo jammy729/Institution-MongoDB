@@ -32,7 +32,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:9001/institution/details/${id}`)
+      .get(`https://institution-api.James yoo.dev/details/${id}`)
       .then((response) => {
         console.log(response.data);
         setInstitutionList(response.data);
